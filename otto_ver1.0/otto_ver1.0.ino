@@ -4,6 +4,11 @@
  * 2) Без БТ работа в обычном режиме, при поглаживании по шее идти в сторону поглаживания
  * 3) Перепечатать голову
  * 4) Скачал гитхаб десктоп
+ * 
+ * Доделать
+ * 1)Связь по BT
+ * 2)Функции при нажатии на боковые сенсоры (подумать)
+ * 3)Кожаные ублюдки!
  */
 
 #include <Servo.h> 
@@ -67,7 +72,7 @@ void loop() {
   //Работа по БТ
   if (Serial.available()){
     int val = Serial.read();
-    //Serial.println(val);
+    Serial.println(val);
     /*Режимы работы
      * Вперёд: F
      * Назад: B
@@ -80,25 +85,66 @@ void loop() {
      */
 
      switch(val){
+     //Движения в стороны
       case('F'):
-        Otto.sing(S_OhOoh);
         Otto.walk(4,500,1);
         Otto.home();
         break;
       case('B'):
-        Otto.sing(S_OhOoh);
         Otto.walk(4,500,-1);
         Otto.home();
         break;
-      //case('L'):
+      case('L'):
+        Otto.turn(10,500,LEFT);
+        Otto.home();
+        break;
+      case('R'):
+        Otto.turn(10,500,RIGHT);
+        Otto.home();
+        break;
+      //Прочие движения
+      case('J'):    
+        Otto.jump(4,500);   //Прыжок
+        Otto.home();
+        break;
+      case('1'):
+        Otto.bend(4,500,LEFT);  //Пошатывания на ногах
+        Otto.home();
+        break;
+      case('2'):
+        Otto.shakeLeg(2,500,RIGHT); //Встряска ногой
+        Otto.shakeLeg(2,500,LEFT);
+        Otto.home();
+        break;
+      case('3'):
+        Otto.updown(4,500,40);  //Прыжки на носочки
+        Otto.home();
+        break;
+      case('4'):
+        Otto.swing(2,500,40); //Наклоны в стороны
+        Otto.home();
+        break;
+      case('M'):
+        Otto.moonwalker(6,500,20,LEFT);   
+        Otto.home();
+        break;
+      case('9'):
+        Otto.crusaito(4,500,20,FORWARD);
+        Otto.home();
+        break;
 
-      //case('R'):
-      
+        /*
+            void jitter(float steps=1, int T=500, int h=20);
+            void ascendingTurn(float steps=1, int T=900, int h=20);
+            void moonwalker(float steps=1, int T=900, int h=20, int dir=LEFT);
+            void crusaito(float steps=1, int T=900, int h=20, int dir=FORWARD);
+            void flapping(float steps=1, int T=1000, int h=20, int dir=FORWARD);        
+        */
      }
      
   }
 
-  //При обнаружении препятствия отто ругается
+  //Обработка обнаружения движения
   if(obstacleDetected){ 
     Otto.sing(S_fart1);  
     Otto.walk(3,500,-1); 
@@ -112,19 +158,21 @@ void loop() {
     obstacleDetector(); 
   }           
   
-
+  //Левый сенсор
   if (digitalRead(sensorLeft)){
     Otto.sing(S_happy);
     Otto.turn(8, 500, LEFT);
     Otto.home();
   }
 
+  //Правый сенсор
   if (digitalRead(sensorRight)){
     Otto.sing(S_happy);
     Otto.turn(8, 500, RIGHT);
     Otto.home();
   }
-   
+
+  //Верхний сенсор
   int state = digitalRead(sensorTop);
  
    if (state == HIGH)
@@ -208,7 +256,7 @@ void loop() {
       Otto.home();
     }    
  
-    motion = motion +1;
+    motion = motion + 1;
     if (motion == 14)
     {
       motion = 1;             
