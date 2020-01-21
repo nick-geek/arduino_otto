@@ -95,15 +95,16 @@ void loop() {
         Otto.home();
         break;
       case('L'):
-        Otto.turn(10,500,LEFT);
+        Otto.turn(4,500,LEFT);
         Otto.home();
         break;
       case('R'):
-        Otto.turn(10,500,RIGHT);
+        Otto.turn(4,500,RIGHT);
         Otto.home();
         break;
+        
       //Прочие движения
-      case('J'):    
+      case('0'):    
         Otto.jump(4,500);   //Прыжок
         Otto.home();
         break;
@@ -121,25 +122,49 @@ void loop() {
         Otto.home();
         break;
       case('4'):
-        Otto.swing(2,500,40); //Наклоны в стороны
+        Otto.swing(4,500,40); //Наклоны в стороны
         Otto.home();
         break;
-      case('M'):
+      case('5'):
+        Otto.tiptoeSwing(4,500,40); //Наклоны в стороны
+        Otto.home();
+        break;
+      case('6'):
+        Otto.jitter(2,500,40); //Наклоны в стороны
+        Otto.home();
+        break;
+      case('7'):
+        Otto.ascendingTurn(2,500,40); //Наклоны в стороны
+        Otto.home();
+        break;
+        
+
+      //Танцы
+      case('Q'):
+        Otto.moonwalker(6,500,20,RIGHT);   
+        Otto.home();
+        break;
+      case('W'):
+        Otto.crusaito(4,500,20,RIGHT);
+        Otto.home();
+        break;
+      case('E'):
+        Otto.flapping(4,500,20,FORWARD);
+        Otto.home();
+        break;
+        
+      case('X'):
         Otto.moonwalker(6,500,20,LEFT);   
         Otto.home();
         break;
-      case('9'):
-        Otto.crusaito(4,500,20,FORWARD);
+      case('Y'):
+        Otto.crusaito(4,500,20,LEFT);
         Otto.home();
         break;
-
-        /*
-            void jitter(float steps=1, int T=500, int h=20);
-            void ascendingTurn(float steps=1, int T=900, int h=20);
-            void moonwalker(float steps=1, int T=900, int h=20, int dir=LEFT);
-            void crusaito(float steps=1, int T=900, int h=20, int dir=FORWARD);
-            void flapping(float steps=1, int T=1000, int h=20, int dir=FORWARD);        
-        */
+      case('Z'):
+        Otto.flapping(4,500,20,BACKWARD);
+        Otto.home();
+        break;
      }
      
   }
@@ -160,15 +185,15 @@ void loop() {
   
   //Левый сенсор
   if (digitalRead(sensorLeft)){
-    Otto.sing(S_happy);
-    Otto.turn(8, 500, LEFT);
+    Otto.sing(S_superHappy);
+    Otto.flapping(4,500,20,BACKWARD);
     Otto.home();
   }
 
   //Правый сенсор
   if (digitalRead(sensorRight)){
-    Otto.sing(S_happy);
-    Otto.turn(8, 500, RIGHT);
+    Otto.sing(S_surprise);
+    Otto.flapping(4,500,20,FORWARD); 
     Otto.home();
   }
 
