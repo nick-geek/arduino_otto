@@ -72,18 +72,7 @@ void loop() {
   //Работа по БТ
   if (Serial.available()){
     int val = Serial.read();
-    Serial.println(val);
-    /*Режимы работы
-     * Вперёд: F
-     * Назад: B
-     * Влево: L
-     * Вправо: R 
-     * Songs:
-     * ...
-     * ...
-     * ...
-     */
-
+    
      switch(val){
      //Движения в стороны
       case('F'):
@@ -137,7 +126,6 @@ void loop() {
         Otto.ascendingTurn(2,500,40); //Наклоны в стороны
         Otto.home();
         break;
-        
 
       //Танцы
       case('Q'):
@@ -184,7 +172,7 @@ void loop() {
   }           
   
   //Левый сенсор
-  if (digitalRead(sensorLeft)){
+  /*if (digitalRead(sensorLeft)){
     Otto.sing(S_superHappy);
     Otto.flapping(4,500,20,BACKWARD);
     Otto.home();
@@ -195,7 +183,7 @@ void loop() {
     Otto.sing(S_surprise);
     Otto.flapping(4,500,20,FORWARD); 
     Otto.home();
-  }
+  }*/
 
   //Верхний сенсор
   int state = digitalRead(sensorTop);
