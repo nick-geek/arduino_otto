@@ -160,23 +160,8 @@ void loop() {
         Otto.home();
         break;
      }
-    //Otto.sing(S_disconnection); 
-  }
-  
-
-  //Обработка обнаружения движения
-  if(obstacleDetected){ 
-    Otto.sing(S_fart1);  
-    Otto.walk(3,500,-1); 
-    Otto.tiptoeSwing(2,500,40); 
-    Otto.home(); 
-    Otto.sing(S_fart3);   
-    delay(50); 
-    obstacleDetector(); 
-  }        
-  else{ 
-    obstacleDetector(); 
-  }        
+    Otto.sing(S_disconnection); 
+  }      
 
   //Верхний сенсор
   int state = digitalRead(sensorTop);
@@ -282,17 +267,44 @@ void loop() {
     Otto.flapping(4,500,20,FORWARD); 
     Otto.home();
   }
+
+    //Обработка обнаружения движения
+  
+  if(obstacleDetected){ 
+    Otto.sing(S_fart1);  
+    Otto.walk(1,500,-1); 
+    //Otto.tiptoeSwing(2,500,40); 
+    Otto.home(); 
+    Otto.sing(S_fart3);   
+    obstacleDetector(); 
+  }        
+  else{ 
+    obstacleDetector(); 
+  }  
+
 }
 
-
-///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 //-- Функция для считывания датчика расстояния и для обновления переменной
 void obstacleDetector(){
-   int distance = Otto.getDistance();
-        if(distance<20){
-          obstacleDetected = 1;
-        }
-        else{
-          obstacleDetected = 0;
-        }
+  //int distance = Otto.getDistance();
+  //Serial.println(distance);
+
+  int sum = 0;
+  int coutns = 50;
+  int distance = 0;
+
+  for (int i = 0; i < coutns; i++) {
+    distance = Otto.getDistance();
+    sum += distance;
+  }
+  int cm = sum/coutns;
+  Serial.println(cm);
+
+  if(cm < 20){
+    obstacleDetected = 1;
+  }
+  else{
+    obstacleDetected = 0;
+  }
 }
