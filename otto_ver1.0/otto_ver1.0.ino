@@ -72,7 +72,8 @@ void loop() {
   //Работа по БТ
   if (Serial.available()){
     int val = Serial.read();
-    
+     Otto.sing(S_connection); 
+
      switch(val){
      //Движения в стороны
       case('F'):
@@ -98,7 +99,8 @@ void loop() {
         Otto.home();
         break;
       case('1'):
-        Otto.bend(4,500,LEFT);  //Пошатывания на ногах
+        Otto.bend(2,500,LEFT);  //Пошатывания на ногах
+        Otto.bend(2,500,RIGHT);  //Пошатывания на ногах
         Otto.home();
         break;
       case('2'):
@@ -119,17 +121,17 @@ void loop() {
         Otto.home();
         break;
       case('6'):
-        Otto.jitter(2,500,40); //Наклоны в стороны
+        Otto.jitter(4,500,40); //Наклоны в стороны
         Otto.home();
         break;
       case('7'):
-        Otto.ascendingTurn(2,500,40); //Наклоны в стороны
+        Otto.ascendingTurn(4,500,40); //Наклоны в стороны
         Otto.home();
         break;
 
       //Танцы
       case('Q'):
-        Otto.moonwalker(6,500,20,RIGHT);   
+        Otto.moonwalker(6,500,40,RIGHT);   
         Otto.home();
         break;
       case('W'):
@@ -142,7 +144,7 @@ void loop() {
         break;
         
       case('X'):
-        Otto.moonwalker(6,500,20,LEFT);   
+        Otto.moonwalker(6,500,40,LEFT);   
         Otto.home();
         break;
       case('Y'):
@@ -153,9 +155,14 @@ void loop() {
         Otto.flapping(4,500,20,BACKWARD);
         Otto.home();
         break;
+      default:
+        Otto.sing(S_fart1); 
+        Otto.home();
+        break;
      }
-     
+    //Otto.sing(S_disconnection); 
   }
+  
 
   //Обработка обнаружения движения
   if(obstacleDetected){ 
@@ -169,21 +176,7 @@ void loop() {
   }        
   else{ 
     obstacleDetector(); 
-  }           
-  
-  //Левый сенсор
-  /*if (digitalRead(sensorLeft)){
-    Otto.sing(S_superHappy);
-    Otto.flapping(4,500,20,BACKWARD);
-    Otto.home();
-  }
-
-  //Правый сенсор
-  if (digitalRead(sensorRight)){
-    Otto.sing(S_surprise);
-    Otto.flapping(4,500,20,FORWARD); 
-    Otto.home();
-  }*/
+  }        
 
   //Верхний сенсор
   int state = digitalRead(sensorTop);
@@ -275,16 +268,31 @@ void loop() {
       motion = 1;             
     }
    }
+
+  //Левый сенсор
+  if (digitalRead(sensorLeft)){
+    Otto.sing(S_superHappy);
+    Otto.flapping(4,500,20,BACKWARD);
+    Otto.home();
+  }
+
+  //Правый сенсор
+  if (digitalRead(sensorRight)){
+    Otto.sing(S_surprise);
+    Otto.flapping(4,500,20,FORWARD); 
+    Otto.home();
+  }
 }
+
 
 ///////////////////////////////////////////////////////////////////
 //-- Функция для считывания датчика расстояния и для обновления переменной
 void obstacleDetector(){
    int distance = Otto.getDistance();
-        if(distance<15){
-          obstacleDetected = true;
+        if(distance<20){
+          obstacleDetected = 1;
         }
         else{
-          obstacleDetected = false;
+          obstacleDetected = 0;
         }
 }
