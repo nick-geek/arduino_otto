@@ -1,14 +1,9 @@
-/* Дата: 31.07.2019
- * Otto с управлением по BT, 3 сенсорами и ультразвуковым дачтиком
- * 1) Сделать управление по БТ, чтобы можно было ходить в стороны и петь песни
- * 2) Без БТ работа в обычном режиме, при поглаживании по шее идти в сторону поглаживания
- * 3) Перепечатать голову
- * 4) Скачал гитхаб десктоп
+/* Дата: 23.01.2020
+ * Автор: NickGeek
+ * Проект: Otto с управлением по BT, 3 сенсорами и ультразвуковым дачтиком
  * 
  * Доделать
- * 1)Связь по BT
- * 2)Функции при нажатии на боковые сенсоры (подумать)
- * 3)Кожаные ублюдки!
+ * 1)Научить Отто говорить
  */
 
 #include <Servo.h> 
@@ -16,9 +11,7 @@
 #include <US.h>
 #include <Otto.h>
 
-
-
-Otto Otto;  //This is Otto!
+Otto Otto;  //Начальная инициализация
 
 //---------------------------------------------------------
 //-- Подключение сервоприводов и датчиков
@@ -95,37 +88,37 @@ void loop() {
         
       //Прочие движения
       case('0'):    
-        Otto.jump(4,500);   //Прыжок
+        Otto.jump(4,500);
         Otto.home();
         break;
       case('1'):
-        Otto.bend(2,500,LEFT);  //Пошатывания на ногах
-        Otto.bend(2,500,RIGHT);  //Пошатывания на ногах
+        Otto.bend(2,500,LEFT);
+        Otto.bend(2,500,RIGHT);
         Otto.home();
         break;
       case('2'):
-        Otto.shakeLeg(2,500,RIGHT); //Встряска ногой
+        Otto.shakeLeg(2,500,RIGHT);
         Otto.shakeLeg(2,500,LEFT);
         Otto.home();
         break;
       case('3'):
-        Otto.updown(4,500,40);  //Прыжки на носочки
+        Otto.updown(4,500,40);
         Otto.home();
         break;
       case('4'):
-        Otto.swing(4,500,40); //Наклоны в стороны
+        Otto.swing(4,500,40);
         Otto.home();
         break;
       case('5'):
-        Otto.tiptoeSwing(4,500,40); //Наклоны в стороны
+        Otto.tiptoeSwing(4,500,40);
         Otto.home();
         break;
       case('6'):
-        Otto.jitter(4,500,40); //Наклоны в стороны
+        Otto.jitter(4,500,40);
         Otto.home();
         break;
       case('7'):
-        Otto.ascendingTurn(4,500,40); //Наклоны в стороны
+        Otto.ascendingTurn(4,500,40);
         Otto.home();
         break;
 
@@ -273,7 +266,7 @@ void loop() {
   if(obstacleDetected){ 
     Otto.sing(S_fart1);  
     Otto.walk(1,500,-1); 
-    //Otto.tiptoeSwing(2,500,40); 
+    Otto.tiptoeSwing(2,500,40); 
     Otto.home(); 
     Otto.sing(S_fart3);   
     obstacleDetector(); 
@@ -287,19 +280,20 @@ void loop() {
 //////////////////////////////////////////////////////////////////////////
 //-- Функция для считывания датчика расстояния и для обновления переменной
 void obstacleDetector(){
-  //int distance = Otto.getDistance();
-  //Serial.println(distance);
 
   int sum = 0;
-  int coutns = 50;
+  int attempts = 50;  //Количество замеров для вычисления среднего. Если уменьшить - будет работать быстрее
   int distance = 0;
+  int cm;
 
-  for (int i = 0; i < coutns; i++) {
+  //Фильтр помех. Вычисляем среднее (пока такой, потом надо переписать)
+  for (int i = 0; i < attempts; i++) {
     distance = Otto.getDistance();
     sum += distance;
   }
-  int cm = sum/coutns;
+  cm = sum/attempts;
   Serial.println(cm);
+
 
   if(cm < 20){
     obstacleDetected = 1;
