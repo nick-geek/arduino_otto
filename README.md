@@ -1,6 +1,6 @@
 # arduino_otto
 Версия Отто с управлением по BT, тремя сенсорами и датчиком расстояния.
 
-libs - библиотеки для arduino
-print - файлы для печати
-otto_ver1.0 - прошивка для arduino
+libs - библиотеки для arduino <br/>
+print - файлы для печати <br/>
+otto_ver1.0 - прошивка для arduino<br/>
