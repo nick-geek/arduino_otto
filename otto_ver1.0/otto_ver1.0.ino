@@ -181,56 +181,57 @@ void loop() {
     }
     if (motion == 4)
     {
-      Otto.sing(S_superHappy);
-      Otto.shakeLeg(3,1000,1); 
-      Otto.home();
-    }
-    if (motion == 5)
-    {
       Otto.sing(S_fart1);
       Otto.flapping(3,500,40,1); 
       Otto.home();
     }  
-    if (motion == 6)
+    if (motion == 5)
     {
       Otto.sing(S_confused);
       Otto.tiptoeSwing(3,1000,30); 
       Otto.home();
     }
-    if (motion == 7)
+    if (motion == 6)
     {
       Otto.sing(S_connection);
       Otto.swing(3,500,40); 
       Otto.home();
     }
-    if (motion == 8)
+    if (motion == 7)
     {
       Otto.sing(S_disconnection);
       Otto.updown(3,1000,30); 
       Otto.home();
     }
-    if (motion == 9)
+    if (motion == 8)
     {
       Otto.sing(S_buttonPushed);
       Otto.jitter(10,500,40); 
       Otto.home();
     }
-    if (motion == 10)
+    if (motion == 9)
     {
       Otto.sing(S_fart3);      
       Otto.ascendingTurn(3,500,50); 
       Otto.home();
     }                
-    if (motion == 11)
+    if (motion == 10)
     {
       Otto.sing(S_sad);      
       Otto.jump(3,500); 
       Otto.home();
     }                
-    if (motion == 12)
+    if (motion == 11)
     {
       Otto.sing(S_cuddly);      
       Otto.turn(3,1000,1); 
+      Otto.home();
+    }
+    //Эти два движения не отрабатываются правильно потому что Отто 
+        /*if (motion == 4)
+    {
+      Otto.sing(S_superHappy);
+      Otto.shakeLeg(3,1000,1); 
       Otto.home();
     }
     if (motion == 13)
@@ -238,10 +239,10 @@ void loop() {
       Otto.sing(S_superHappy);      
       Otto.bend(3,1000,1); 
       Otto.home();
-    }    
+    }*/    
  
     motion = motion + 1;
-    if (motion == 14)
+    if (motion == 12)
     {
       motion = 1;             
     }
@@ -266,7 +267,7 @@ void loop() {
   if(obstacleDetected){ 
     Otto.sing(S_fart1);  
     Otto.walk(1,500,-1); 
-    Otto.tiptoeSwing(2,500,40); 
+    Otto.tiptoeSwing(4,500,40); 
     Otto.home(); 
     Otto.sing(S_fart3);   
     obstacleDetector(); 
